@@ -37,7 +37,6 @@ namespace StreamPlayer3
             this.panelBufferSize = new System.Windows.Forms.Panel();
             this.labelBufferSizeValue = new System.Windows.Forms.Label();
             this.panelOpenStream = new System.Windows.Forms.Panel();
-            this.panelTimeoutSettings = new System.Windows.Forms.Panel();
             this.labelState = new System.Windows.Forms.Label();
             this.buttonCloseStream = new System.Windows.Forms.Button();
             this.listBoxQualityPlaylist = new System.Windows.Forms.ListBox();
@@ -49,20 +48,11 @@ namespace StreamPlayer3
             this.buttonEdit = new System.Windows.Forms.Button();
             this.buttonRemove = new System.Windows.Forms.Button();
             this.listBoxFavorite = new System.Windows.Forms.ListBox();
-            this.numericUpDownTimeout = new System.Windows.Forms.NumericUpDown();
-            this.checkBoxTimeout = new System.Windows.Forms.CheckBox();
-            this.labelTimeout = new System.Windows.Forms.Label();
-            this.panelPlayerSettings = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarBufferSize)).BeginInit();
             this.panelBufferSize.SuspendLayout();
             this.panelOpenStream.SuspendLayout();
-            this.panelTimeoutSettings.SuspendLayout();
             this.panelPlay.SuspendLayout();
             this.panelFavorite.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeout)).BeginInit();
-            this.panelPlayerSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonOpenStream
@@ -125,7 +115,7 @@ namespace StreamPlayer3
             this.panelBufferSize.Controls.Add(this.labelBufferSize);
             this.panelBufferSize.Controls.Add(this.labelBufferSizeValue);
             this.panelBufferSize.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.panelBufferSize.Location = new System.Drawing.Point(-1, 204);
+            this.panelBufferSize.Location = new System.Drawing.Point(-1, 259);
             this.panelBufferSize.Name = "panelBufferSize";
             this.panelBufferSize.Size = new System.Drawing.Size(217, 57);
             this.panelBufferSize.TabIndex = 9;
@@ -145,8 +135,6 @@ namespace StreamPlayer3
             // 
             this.panelOpenStream.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelOpenStream.Controls.Add(this.panelBufferSize);
-            this.panelOpenStream.Controls.Add(this.panelPlayerSettings);
-            this.panelOpenStream.Controls.Add(this.panelTimeoutSettings);
             this.panelOpenStream.Controls.Add(this.labelState);
             this.panelOpenStream.Controls.Add(this.buttonCloseStream);
             this.panelOpenStream.Controls.Add(this.buttonOpenStream);
@@ -155,19 +143,6 @@ namespace StreamPlayer3
             this.panelOpenStream.Name = "panelOpenStream";
             this.panelOpenStream.Size = new System.Drawing.Size(217, 317);
             this.panelOpenStream.TabIndex = 12;
-            // 
-            // panelTimeoutSettings
-            // 
-            this.panelTimeoutSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelTimeoutSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelTimeoutSettings.Controls.Add(this.labelTimeout);
-            this.panelTimeoutSettings.Controls.Add(this.checkBoxTimeout);
-            this.panelTimeoutSettings.Controls.Add(this.numericUpDownTimeout);
-            this.panelTimeoutSettings.Location = new System.Drawing.Point(-1, 148);
-            this.panelTimeoutSettings.Name = "panelTimeoutSettings";
-            this.panelTimeoutSettings.Size = new System.Drawing.Size(217, 57);
-            this.panelTimeoutSettings.TabIndex = 21;
             // 
             // labelState
             // 
@@ -321,92 +296,6 @@ namespace StreamPlayer3
             this.listBoxFavorite.TabIndex = 15;
             this.listBoxFavorite.SelectedIndexChanged += new System.EventHandler(this.listBoxFavorite_SelectedIndexChanged);
             // 
-            // numericUpDownTimeout
-            // 
-            this.numericUpDownTimeout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownTimeout.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDownTimeout.Increment = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numericUpDownTimeout.Location = new System.Drawing.Point(6, 24);
-            this.numericUpDownTimeout.Maximum = new decimal(new int[] {
-            20000,
-            0,
-            0,
-            0});
-            this.numericUpDownTimeout.Name = "numericUpDownTimeout";
-            this.numericUpDownTimeout.Size = new System.Drawing.Size(102, 25);
-            this.numericUpDownTimeout.TabIndex = 0;
-            this.numericUpDownTimeout.Value = new decimal(new int[] {
-            5000,
-            0,
-            0,
-            0});
-            // 
-            // checkBoxTimeout
-            // 
-            this.checkBoxTimeout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxTimeout.AutoSize = true;
-            this.checkBoxTimeout.Location = new System.Drawing.Point(125, 28);
-            this.checkBoxTimeout.Name = "checkBoxTimeout";
-            this.checkBoxTimeout.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.checkBoxTimeout.Size = new System.Drawing.Size(77, 17);
-            this.checkBoxTimeout.TabIndex = 1;
-            this.checkBoxTimeout.Text = "No timeout";
-            this.checkBoxTimeout.UseVisualStyleBackColor = true;
-            this.checkBoxTimeout.CheckedChanged += new System.EventHandler(this.checkBoxTimeout_CheckedChanged);
-            // 
-            // labelTimeout
-            // 
-            this.labelTimeout.AutoSize = true;
-            this.labelTimeout.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelTimeout.Location = new System.Drawing.Point(3, 4);
-            this.labelTimeout.Margin = new System.Windows.Forms.Padding(0);
-            this.labelTimeout.Name = "labelTimeout";
-            this.labelTimeout.Size = new System.Drawing.Size(55, 17);
-            this.labelTimeout.TabIndex = 9;
-            this.labelTimeout.Text = "Timeout";
-            // 
-            // panelPlayerSettings
-            // 
-            this.panelPlayerSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelPlayerSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelPlayerSettings.Controls.Add(this.label1);
-            this.panelPlayerSettings.Controls.Add(this.checkBox1);
-            this.panelPlayerSettings.Location = new System.Drawing.Point(-1, 259);
-            this.panelPlayerSettings.Name = "panelPlayerSettings";
-            this.panelPlayerSettings.Size = new System.Drawing.Size(217, 57);
-            this.panelPlayerSettings.TabIndex = 22;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(3, 4);
-            this.label1.Margin = new System.Windows.Forms.Padding(0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(92, 17);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Player settings";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 29);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.checkBox1.Size = new System.Drawing.Size(203, 17);
-            this.checkBox1.TabIndex = 1;
-            this.checkBox1.Text = "Try to open player again, if it is closed";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // StreamPlayer3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -424,13 +313,8 @@ namespace StreamPlayer3
             this.panelBufferSize.PerformLayout();
             this.panelOpenStream.ResumeLayout(false);
             this.panelOpenStream.PerformLayout();
-            this.panelTimeoutSettings.ResumeLayout(false);
-            this.panelTimeoutSettings.PerformLayout();
             this.panelPlay.ResumeLayout(false);
             this.panelFavorite.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeout)).EndInit();
-            this.panelPlayerSettings.ResumeLayout(false);
-            this.panelPlayerSettings.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -455,13 +339,6 @@ namespace StreamPlayer3
         private System.Windows.Forms.ListBox listBoxFavorite;
         private System.Windows.Forms.Button buttonEdit;
         private System.Windows.Forms.Button buttonRemove;
-        private System.Windows.Forms.Panel panelTimeoutSettings;
-        private System.Windows.Forms.Label labelTimeout;
-        private System.Windows.Forms.CheckBox checkBoxTimeout;
-        private System.Windows.Forms.NumericUpDown numericUpDownTimeout;
-        private System.Windows.Forms.Panel panelPlayerSettings;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 

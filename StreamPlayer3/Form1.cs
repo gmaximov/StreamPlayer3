@@ -21,7 +21,6 @@ namespace StreamPlayer3
 
         private Queue<TwitchDownload> chunks;
 
-        private volatile bool isStreamStarted;
         private volatile bool isStreamDownloading;
         private volatile bool isStreamStopped;
 
@@ -39,7 +38,8 @@ namespace StreamPlayer3
             buttonOpenStream.Enabled = false;
             textBoxOpenStream.Enabled = false;
             panelBufferSize.Enabled = false;
-            panelTimeoutSettings.Enabled = false;
+
+            bufferSize = trackBarBufferSize.Value;
 
             OpenStream();
         }
@@ -115,9 +115,6 @@ namespace StreamPlayer3
                 CloseStream();
             }
 
-            bufferSize = trackBarBufferSize.Value;
-            timeout = Convert.ToInt32(numericUpDownTimeout.Value);
-            noTimeout = checkBoxTimeout.Checked;
         }
         private void CloseStream()
         {
@@ -129,7 +126,6 @@ namespace StreamPlayer3
             textBoxOpenStream.Enabled = true;
             buttonOpenStream.Enabled = true;
             panelBufferSize.Enabled = true;
-            panelTimeoutSettings.Enabled = true;
         }
 
         private async void Play()
@@ -142,7 +138,6 @@ namespace StreamPlayer3
             {
                 while ( isStreamDownloading )
                 {
-                    Console.WriteLine("Поток 1 выводит ");
                     string response = await httpClient.GetStringAsync(url);
                     string[] playlist = M3U8.Build(response);
                     if ( lastindex == string.Empty )
@@ -177,10 +172,9 @@ namespace StreamPlayer3
                     Thread.Sleep(1000);
                 }
             }
-            catch ( Exception e )
+            catch
             {
                 isStreamDownloading = false;
-                Console.WriteLine(e.ToString());
             }
 
             lock ( chunks )
@@ -198,7 +192,6 @@ namespace StreamPlayer3
 
             while (true)
             {
-                Console.WriteLine("Поток 2 выводит 1");
                 lock ( chunks )
                 {
                     if ( chunks.Count >= bufferSize )
@@ -216,8 +209,6 @@ namespace StreamPlayer3
             {
                 while ( isStreamDownloading )
                 {
-
-                    Console.WriteLine("Поток 2 выводит 2");
                     byte[] chunk = null;
                     lock ( chunks )
                     {
@@ -234,10 +225,9 @@ namespace StreamPlayer3
                 }
                 player.Close();
             }
-            catch ( Exception e )
+            catch
             {
                 isStreamDownloading = false;
-                Console.WriteLine(e.ToString());
             }
         }
 
@@ -448,22 +438,6 @@ namespace StreamPlayer3
                 }
             }
         }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBoxTimeout_CheckedChanged(object sender, EventArgs e)
-        {
-            if(checkBoxTimeout.Checked)
-            {
-                numericUpDownTimeout.Enabled = false;
-            }
-            else
-            {
-                numericUpDownTimeout.Enabled = true;
-            }
-        }
+        
     }
 }
