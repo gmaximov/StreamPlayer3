@@ -18,6 +18,7 @@ namespace StreamPlayer3
         private int bufferSize;
         private int timeout;
         private bool noTimeout;
+        private bool tryOpenPlayer;
 
         private Queue<TwitchDownload> chunks;
 
@@ -34,12 +35,17 @@ namespace StreamPlayer3
         {
             labelState.Text = string.Empty;
 
-
             //block controls
             buttonOpenStream.Enabled = false;
             textBoxOpenStream.Enabled = false;
             panelBufferSize.Enabled = false;
             panelTimeoutSettings.Enabled = false;
+            panelPlayerSettings.Enabled = false;
+
+            bufferSize = trackBarBufferSize.Value;
+            timeout = Convert.ToInt32(numericUpDownTimeout.Value);
+            noTimeout = checkBoxTimeout.Checked;
+            tryOpenPlayer = checkBoxPlayerReopen.Checked;
 
             OpenStream();
         }
@@ -114,10 +120,6 @@ namespace StreamPlayer3
             {
                 CloseStream();
             }
-
-            bufferSize = trackBarBufferSize.Value;
-            timeout = Convert.ToInt32(numericUpDownTimeout.Value);
-            noTimeout = checkBoxTimeout.Checked;
         }
         private void CloseStream()
         {
@@ -130,6 +132,7 @@ namespace StreamPlayer3
             buttonOpenStream.Enabled = true;
             panelBufferSize.Enabled = true;
             panelTimeoutSettings.Enabled = true;
+            panelPlayerSettings.Enabled = true;
         }
 
         private async void Play()
@@ -138,49 +141,65 @@ namespace StreamPlayer3
             string url = selectedQuality.url;
             string lastindex = string.Empty;
             int startLine = 8;
-            try
+            bool timeoutStarted = false;
+
+            while ( isStreamDownloading )
             {
-                while ( isStreamDownloading )
+                try
                 {
-                    Console.WriteLine("Поток 1 выводит ");
-                    string response = await httpClient.GetStringAsync(url);
-                    string[] playlist = M3U8.Build(response);
-                    if ( lastindex == string.Empty )
+                    while ( isStreamDownloading )
                     {
-                        lastindex = playlist[16]; //?
-                    }
-                    bool isLastFound = false;
-                    for ( int i = 0; i < 6; i++ )
-                    {
-                        string chunkName = playlist[startLine + (i * 2)];
-                        if( !isLastFound)
+                        string response = await httpClient.GetStringAsync(url);
+                        string[] playlist = M3U8.Build(response);
+                        if ( lastindex == string.Empty )
                         {
-                            if ( lastindex != chunkName)
+                            lastindex = playlist[16]; //?
+                        }
+                        bool isLastFound = false;
+                        for ( int i = 0; i < 6; i++ )
+                        {
+                            string chunkName = playlist[startLine + (i * 2)];
+                            if ( !isLastFound )
                             {
-                                continue;
+                                if ( lastindex != chunkName )
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    isLastFound = true;
+                                    continue;
+                                }
                             }
-                            else
+                            lastindex = chunkName;
+                            string chunkPath = url.ToString().Replace("index-live.m3u8", chunkName);
+                            byte[] chunk = await httpClient.GetByteArrayAsync(chunkPath);
+                            lock ( chunks )
                             {
-                                isLastFound = true;
-                                continue;
+                                chunks.Enqueue(new TwitchDownload(chunkName, chunk));
                             }
                         }
-                        lastindex = chunkName;
-                        string chunkPath = url.ToString().Replace("index-live.m3u8", chunkName);
-                        byte[] chunk = await httpClient.GetByteArrayAsync(chunkPath);
-                        lock ( chunks )
-                        {
-                            chunks.Enqueue(new TwitchDownload(chunkName, chunk));
-                        }
+                        lastindex = playlist[18];
+                        Thread.Sleep(1000);
                     }
-                    lastindex = playlist[18];
-                    Thread.Sleep(1000);
                 }
-            }
-            catch ( Exception e )
-            {
-                isStreamDownloading = false;
-                Console.WriteLine(e.ToString());
+                catch ( Exception e )
+                {
+                    Console.WriteLine(e.ToString());
+                    if ( !noTimeout )
+                    {
+                        if ( timeoutStarted )
+                        {
+                            isStreamDownloading = false;
+                            break;
+                        }
+                        else
+                        {
+                            timeoutStarted = true;
+                            Thread.Sleep(timeout);
+                        }
+                    }
+                }
             }
 
             lock ( chunks )
@@ -193,12 +212,10 @@ namespace StreamPlayer3
 
         private async void StartWrite()
         {
-            int bufferSize = this.bufferSize;
             int wait = bufferSize * 1000 + 1000;
 
             while (true)
             {
-                Console.WriteLine("Поток 2 выводит 1");
                 lock ( chunks )
                 {
                     if ( chunks.Count >= bufferSize )
@@ -208,36 +225,39 @@ namespace StreamPlayer3
                 }
                 Thread.Sleep(wait);
             }
-
-            MPCBEPlayer player = new MPCBEPlayer();
-            player.Start();
-
-            try
+            while ( isStreamDownloading )
             {
-                while ( isStreamDownloading )
+                try
                 {
-
-                    Console.WriteLine("Поток 2 выводит 2");
-                    byte[] chunk = null;
-                    lock ( chunks )
+                    MPCBEPlayer player = new MPCBEPlayer();
+                    player.Start();
+                    while ( isStreamDownloading )
                     {
-                        if ( chunks.Count > 0 )
+                        byte[] chunk = null;
+                        lock ( chunks )
                         {
-                            chunk = chunks.Dequeue().chunk;
+                            if ( chunks.Count > 0 )
+                            {
+                                chunk = chunks.Dequeue().chunk;
+                            }
                         }
+                        if ( chunk != null )
+                        {
+                            await player.WriteByteArray(chunk);
+                        }
+                        Thread.Sleep(1000);
                     }
-                    if ( chunk != null )
-                    {
-                        await player.WriteByteArray(chunk);
-                    }
-                    Thread.Sleep(1000);
+                    player.Close();
                 }
-                player.Close();
-            }
-            catch ( Exception e )
-            {
-                isStreamDownloading = false;
-                Console.WriteLine(e.ToString());
+                catch ( Exception e )
+                {
+                    Console.WriteLine(e.ToString());
+                    if ( !tryOpenPlayer )
+                    {
+                        isStreamDownloading = false;
+                        break;
+                    }
+                }
             }
         }
 
@@ -329,10 +349,12 @@ namespace StreamPlayer3
                 resolution = parameters[2].Split('=')[1].Replace("\"", "");
 
                 bool parsed = Int32.TryParse(parameters[1].Split('=')[1].Replace("\"", ""), out bitrate);
+
                 if ( !parsed )
                 {
                     throw new Exception("SOMETHING BAD HAPPEN WHILE PARSING " + parameters[1].Replace("\"", "") + " to INT");
                 }
+
                 bitrate = bitrate / 1024;
 
                 url = qualityPlaylist[currentLine + 2];
