@@ -85,36 +85,24 @@ namespace StreamPlayer3
         private async void OpenStream()
         {
             string channelName = textBoxOpenStream.Text;
-            TwitchStreamState streamState;
-            qualityPlaylist = null;
 
-            streamState = await this.GetStreamState(textBoxOpenStream.Text);
-
-            if ( streamState == TwitchStreamState.OK )
-            {
-                qualityPlaylist = await this.GetQualityPlaylist(channelName);
-                if ( qualityPlaylist == null )
-                {
-                    CloseStream();
-                }
-                else
-                {
-                    listBoxQualityPlaylist.Items.Clear();
-                    foreach ( string qualityName in qualityPlaylist.Keys )
-                    {
-                        listBoxQualityPlaylist.Items.Add(qualityName);
-                    }
-                    listBoxQualityPlaylist.SelectedIndex = 0;
-                    
-                    panelPlay.Enabled = true;
-                    buttonCloseStream.Enabled = true;
-                }
-            }
-            else
+            qualityPlaylist = await this.GetQualityPlaylist(channelName);
+            if ( qualityPlaylist == null )
             {
                 CloseStream();
             }
+            else
+            {
+                listBoxQualityPlaylist.Items.Clear();
+                foreach ( string qualityName in qualityPlaylist.Keys )
+                {
+                    listBoxQualityPlaylist.Items.Add(qualityName);
+                }
+                listBoxQualityPlaylist.SelectedIndex = 0;
 
+                panelPlay.Enabled = true;
+                buttonCloseStream.Enabled = true;
+            }
         }
         private void CloseStream()
         {
@@ -279,7 +267,7 @@ namespace StreamPlayer3
 
             path = "http://api.twitch.tv/api/channels/"
                 + channelName.ToLower()
-                + "/access_token.json?oauth_token=vulpdpdf3w1vlauqou558rqz397rkl";
+                + "/access_token.json?oauth_token=qflco99t368mdeu5o04vx1eaw4tz52";
            
             string response;
 
@@ -334,42 +322,7 @@ namespace StreamPlayer3
             }
             return parsedPlaylist;
         }
-
-        private async Task<TwitchStreamState> GetStreamState(string channelName)
-        {
-            TwitchStream streamInfo = await GetStream(channelName);
-            if ( streamInfo == null )
-            {
-                labelState.Text = "Stream is not found \nor internet connection problem";
-                return TwitchStreamState.NotFound;
-            }
-            else if ( streamInfo.stream == null )
-            {
-                labelState.Text = "Stream is not online";
-                return TwitchStreamState.NotOnline;
-            }
-            else
-            {
-                labelState.Text = "Stream is online";
-                return TwitchStreamState.OK;
-            }
-        }
-        private async Task<TwitchStream> GetStream(string channelName)
-        {
-            Uri site = new Uri("https://api.twitch.tv/kraken/streams/" + channelName.ToLower());
-            try
-            {
-                string STR = await httpClient.GetStringAsync(site);
-                TwitchStream twitchStream = Utility.Deserialize<TwitchStream>(STR);
-                return twitchStream;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-
+        
         private void Form1_Load(object sender, EventArgs e)
         {
             httpClient = new HttpClient();

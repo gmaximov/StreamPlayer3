@@ -78,7 +78,6 @@ namespace StreamPlayer3
             this.textBoxOpenStream.Name = "textBoxOpenStream";
             this.textBoxOpenStream.Size = new System.Drawing.Size(217, 25);
             this.textBoxOpenStream.TabIndex = 1;
-            this.textBoxOpenStream.Text = "Nightblue3";
             // 
             // trackBarBufferSize
             // 
