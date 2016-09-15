@@ -16,8 +16,6 @@ namespace StreamPlayer3
         private TwitchQuality selectedQuality;
 
         private int bufferSize;
-        private int timeout;
-        private bool noTimeout;
 
         private Queue<TwitchDownload> chunks;
 
