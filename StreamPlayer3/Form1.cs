@@ -252,6 +252,7 @@ namespace StreamPlayer3
             Uri site = new Uri("http://usher.twitch.tv/api/channel/hls/"
                 + channelName.ToLower()
                 + ".m3u8?player=twitchweb&token="
+                + ""
                 + accessToken.token
                 + "&sig="
                 + accessToken.sig
@@ -278,8 +279,8 @@ namespace StreamPlayer3
 
             path = "http://api.twitch.tv/api/channels/"
                 + channelName.ToLower()
-                + "/access_token";
-
+                + "/access_token.json?oauth_token=vulpdpdf3w1vlauqou558rqz397rkl";
+           
             string response;
 
             try
@@ -288,6 +289,7 @@ namespace StreamPlayer3
             }
             catch
             {
+                Console.WriteLine("error");
                 return null;
             }
 
