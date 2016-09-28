@@ -50,6 +50,7 @@ namespace StreamPlayer3
             this.listBoxFavorite = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.versionCheckToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonChat = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarBufferSize)).BeginInit();
             this.panelBufferSize.SuspendLayout();
             this.panelOpenStream.SuspendLayout();
@@ -136,6 +137,7 @@ namespace StreamPlayer3
             // panelOpenStream
             // 
             this.panelOpenStream.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelOpenStream.Controls.Add(this.buttonChat);
             this.panelOpenStream.Controls.Add(this.panelBufferSize);
             this.panelOpenStream.Controls.Add(this.labelState);
             this.panelOpenStream.Controls.Add(this.buttonCloseStream);
@@ -304,6 +306,7 @@ namespace StreamPlayer3
             this.versionCheckToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.menuStrip1.Size = new System.Drawing.Size(692, 24);
             this.menuStrip1.TabIndex = 20;
             this.menuStrip1.Text = "menuStrip1";
@@ -314,6 +317,21 @@ namespace StreamPlayer3
             this.versionCheckToolStripMenuItem1.Size = new System.Drawing.Size(92, 20);
             this.versionCheckToolStripMenuItem1.Text = "Version check";
             this.versionCheckToolStripMenuItem1.Click += new System.EventHandler(this.checkUpdateToolStripMenuItem1_Click);
+            // 
+            // buttonChat
+            // 
+            this.buttonChat.Enabled = false;
+            this.buttonChat.FlatAppearance.BorderColor = System.Drawing.SystemColors.GrayText;
+            this.buttonChat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonChat.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonChat.Location = new System.Drawing.Point(-1, 47);
+            this.buttonChat.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonChat.Name = "buttonChat";
+            this.buttonChat.Size = new System.Drawing.Size(217, 25);
+            this.buttonChat.TabIndex = 21;
+            this.buttonChat.Text = "Open chat";
+            this.buttonChat.UseVisualStyleBackColor = true;
+            this.buttonChat.Click += new System.EventHandler(this.buttonChat_Click);
             // 
             // StreamPlayer3
             // 
@@ -327,10 +345,9 @@ namespace StreamPlayer3
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(708, 406);
             this.MinimumSize = new System.Drawing.Size(708, 406);
             this.Name = "StreamPlayer3";
-            this.Text = "StreamPlayer3";
+            this.Text = "StreamPlayer";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackBarBufferSize)).EndInit();
             this.panelBufferSize.ResumeLayout(false);
@@ -366,6 +383,7 @@ namespace StreamPlayer3
         private System.Windows.Forms.ListBox listBoxFavorite;
         private System.Windows.Forms.Button buttonEdit;
         private System.Windows.Forms.Button buttonRemove;
+        private System.Windows.Forms.Button buttonChat;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem versionCheckToolStripMenuItem1;
     }

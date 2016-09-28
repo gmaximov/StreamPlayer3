@@ -44,6 +44,7 @@ namespace StreamPlayer3
         private void buttonCloseStream_Click(object sender, EventArgs e)
         {
             buttonCloseStream.Enabled = false;
+            buttonChat.Enabled = false;
             panelPlay.Enabled = false;
 
             CloseStream();
@@ -100,6 +101,7 @@ namespace StreamPlayer3
 
                 panelPlay.Enabled = true;
                 buttonCloseStream.Enabled = true;
+                buttonChat.Enabled = true;
             }
         }
         private void CloseStream()
@@ -394,7 +396,7 @@ namespace StreamPlayer3
 
         private async void checkUpdateToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            string version = "000000000003";
+            string version = "000000000004";
             string new_version_path = "https://raw.githubusercontent.com/gmaximov/StreamPlayer3/master/StreamPlayer3/version.txt";
 
             string new_version = await httpClient.GetStringAsync(new_version_path);
@@ -410,6 +412,11 @@ namespace StreamPlayer3
             {
                 MessageBox.Show("You have latest version.", "Version check");
             }
+        }
+
+        private void buttonChat_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.twitch.tv/" + textBoxOpenStream.Text + "/chat?popout=");
         }
     }
 }
