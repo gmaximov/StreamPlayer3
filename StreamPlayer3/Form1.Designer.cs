@@ -49,7 +49,7 @@ namespace StreamPlayer3
             this.buttonRemove = new System.Windows.Forms.Button();
             this.listBoxFavorite = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.checkUpdateToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.versionCheckToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarBufferSize)).BeginInit();
             this.panelBufferSize.SuspendLayout();
             this.panelOpenStream.SuspendLayout();
@@ -301,19 +301,19 @@ namespace StreamPlayer3
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.checkUpdateToolStripMenuItem1});
+            this.versionCheckToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(692, 24);
             this.menuStrip1.TabIndex = 20;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // checkUpdateToolStripMenuItem1
+            // versionCheckToolStripMenuItem1
             // 
-            this.checkUpdateToolStripMenuItem1.Name = "checkUpdateToolStripMenuItem1";
-            this.checkUpdateToolStripMenuItem1.Size = new System.Drawing.Size(92, 20);
-            this.checkUpdateToolStripMenuItem1.Text = "Check update";
-            this.checkUpdateToolStripMenuItem1.Click += new System.EventHandler(this.checkUpdateToolStripMenuItem1_Click);
+            this.versionCheckToolStripMenuItem1.Name = "versionCheckToolStripMenuItem1";
+            this.versionCheckToolStripMenuItem1.Size = new System.Drawing.Size(92, 20);
+            this.versionCheckToolStripMenuItem1.Text = "Version check";
+            this.versionCheckToolStripMenuItem1.Click += new System.EventHandler(this.checkUpdateToolStripMenuItem1_Click);
             // 
             // StreamPlayer3
             // 
@@ -367,7 +367,7 @@ namespace StreamPlayer3
         private System.Windows.Forms.Button buttonEdit;
         private System.Windows.Forms.Button buttonRemove;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem checkUpdateToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem versionCheckToolStripMenuItem1;
     }
 }
 

@@ -395,7 +395,7 @@ namespace StreamPlayer3
         private async void checkUpdateToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             string version = "000000000002";
-            string new_version_path = "https://raw.githubusercontent.com/gmaximov/StreamPlayer3/master/version.txt";
+            string new_version_path = "https://raw.githubusercontent.com/gmaximov/StreamPlayer3/master/StreamPlayer3/version.txt";
 
             string new_version = await httpClient.GetStringAsync(new_version_path);
 
@@ -405,6 +405,10 @@ namespace StreamPlayer3
                 {
                     System.Diagnostics.Process.Start("https://mega.nz/#F!d0xUGLhZ!Rve7JFm7moPmsOCT8m0XXQ");
                 }
+            }
+            else
+            {
+                MessageBox.Show("You have latest version.", "Version check");
             }
         }
     }
