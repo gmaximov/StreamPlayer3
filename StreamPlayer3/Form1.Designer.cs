@@ -48,11 +48,14 @@ namespace StreamPlayer3
             this.buttonEdit = new System.Windows.Forms.Button();
             this.buttonRemove = new System.Windows.Forms.Button();
             this.listBoxFavorite = new System.Windows.Forms.ListBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.checkUpdateToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarBufferSize)).BeginInit();
             this.panelBufferSize.SuspendLayout();
             this.panelOpenStream.SuspendLayout();
             this.panelPlay.SuspendLayout();
             this.panelFavorite.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonOpenStream
@@ -138,7 +141,7 @@ namespace StreamPlayer3
             this.panelOpenStream.Controls.Add(this.buttonCloseStream);
             this.panelOpenStream.Controls.Add(this.buttonOpenStream);
             this.panelOpenStream.Controls.Add(this.textBoxOpenStream);
-            this.panelOpenStream.Location = new System.Drawing.Point(235, 12);
+            this.panelOpenStream.Location = new System.Drawing.Point(235, 39);
             this.panelOpenStream.Name = "panelOpenStream";
             this.panelOpenStream.Size = new System.Drawing.Size(217, 317);
             this.panelOpenStream.TabIndex = 12;
@@ -203,7 +206,7 @@ namespace StreamPlayer3
             this.panelPlay.Controls.Add(this.buttonPlay);
             this.panelPlay.Controls.Add(this.listBoxQualityPlaylist);
             this.panelPlay.Enabled = false;
-            this.panelPlay.Location = new System.Drawing.Point(458, 12);
+            this.panelPlay.Location = new System.Drawing.Point(463, 39);
             this.panelPlay.Name = "panelPlay";
             this.panelPlay.Size = new System.Drawing.Size(217, 317);
             this.panelPlay.TabIndex = 18;
@@ -230,7 +233,7 @@ namespace StreamPlayer3
             this.panelFavorite.Controls.Add(this.buttonEdit);
             this.panelFavorite.Controls.Add(this.buttonRemove);
             this.panelFavorite.Controls.Add(this.listBoxFavorite);
-            this.panelFavorite.Location = new System.Drawing.Point(12, 12);
+            this.panelFavorite.Location = new System.Drawing.Point(12, 39);
             this.panelFavorite.Name = "panelFavorite";
             this.panelFavorite.Size = new System.Drawing.Size(217, 317);
             this.panelFavorite.TabIndex = 19;
@@ -295,17 +298,39 @@ namespace StreamPlayer3
             this.listBoxFavorite.TabIndex = 15;
             this.listBoxFavorite.SelectedIndexChanged += new System.EventHandler(this.listBoxFavorite_SelectedIndexChanged);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.checkUpdateToolStripMenuItem1});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(692, 24);
+            this.menuStrip1.TabIndex = 20;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // checkUpdateToolStripMenuItem1
+            // 
+            this.checkUpdateToolStripMenuItem1.Name = "checkUpdateToolStripMenuItem1";
+            this.checkUpdateToolStripMenuItem1.Size = new System.Drawing.Size(92, 20);
+            this.checkUpdateToolStripMenuItem1.Text = "Check update";
+            this.checkUpdateToolStripMenuItem1.Click += new System.EventHandler(this.checkUpdateToolStripMenuItem1_Click);
+            // 
             // StreamPlayer3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(692, 349);
+            this.ClientSize = new System.Drawing.Size(692, 368);
             this.Controls.Add(this.panelFavorite);
             this.Controls.Add(this.panelOpenStream);
             this.Controls.Add(this.panelPlay);
+            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(708, 406);
+            this.MinimumSize = new System.Drawing.Size(708, 406);
             this.Name = "StreamPlayer3";
-            this.Text = "StreamPlayer3 v0.7";
+            this.Text = "StreamPlayer3";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackBarBufferSize)).EndInit();
             this.panelBufferSize.ResumeLayout(false);
@@ -314,7 +339,10 @@ namespace StreamPlayer3
             this.panelOpenStream.PerformLayout();
             this.panelPlay.ResumeLayout(false);
             this.panelFavorite.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -338,6 +366,8 @@ namespace StreamPlayer3
         private System.Windows.Forms.ListBox listBoxFavorite;
         private System.Windows.Forms.Button buttonEdit;
         private System.Windows.Forms.Button buttonRemove;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem checkUpdateToolStripMenuItem1;
     }
 }
 

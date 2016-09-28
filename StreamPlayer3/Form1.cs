@@ -119,7 +119,7 @@ namespace StreamPlayer3
 
             string url = selectedQuality.url;
             string lastindex = string.Empty;
-            int startLine = 8;
+            int startLine = 9;
             try
             {
                 while ( isStreamDownloading )
@@ -128,7 +128,7 @@ namespace StreamPlayer3
                     string[] playlist = M3U8.Build(response);
                     if ( lastindex == string.Empty )
                     {
-                        lastindex = playlist[16]; //?
+                        lastindex = playlist[19]; //?
                     }
                     bool isLastFound = false;
                     for ( int i = 0; i < 6; i++ )
@@ -154,7 +154,7 @@ namespace StreamPlayer3
                             chunks.Enqueue(new TwitchDownload(chunkName, chunk));
                         }
                     }
-                    lastindex = playlist[18];
+                    lastindex = playlist[19];
                     Thread.Sleep(1000);
                 }
             }
@@ -391,6 +391,21 @@ namespace StreamPlayer3
                 }
             }
         }
-        
+
+        private async void checkUpdateToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            string version = "000000000002";
+            string new_version_path = "https://raw.githubusercontent.com/gmaximov/StreamPlayer3/master/version.txt";
+
+            string new_version = await httpClient.GetStringAsync(new_version_path);
+
+            if (version != new_version)
+            {
+                if ( MessageBox.Show("New version available. Would you like to download it?", "Version check", MessageBoxButtons.YesNo) == DialogResult.Yes )
+                {
+                    System.Diagnostics.Process.Start("https://mega.nz/#F!d0xUGLhZ!Rve7JFm7moPmsOCT8m0XXQ");
+                }
+            }
+        }
     }
 }
