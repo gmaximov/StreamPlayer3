@@ -37,6 +37,7 @@ namespace StreamPlayer3
             this.panelBufferSize = new System.Windows.Forms.Panel();
             this.labelBufferSizeValue = new System.Windows.Forms.Label();
             this.panelOpenStream = new System.Windows.Forms.Panel();
+            this.buttonChat = new System.Windows.Forms.Button();
             this.labelState = new System.Windows.Forms.Label();
             this.buttonCloseStream = new System.Windows.Forms.Button();
             this.listBoxQualityPlaylist = new System.Windows.Forms.ListBox();
@@ -50,7 +51,6 @@ namespace StreamPlayer3
             this.listBoxFavorite = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.versionCheckToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.buttonChat = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarBufferSize)).BeginInit();
             this.panelBufferSize.SuspendLayout();
             this.panelOpenStream.SuspendLayout();
@@ -69,7 +69,7 @@ namespace StreamPlayer3
             this.buttonOpenStream.Name = "buttonOpenStream";
             this.buttonOpenStream.Size = new System.Drawing.Size(109, 25);
             this.buttonOpenStream.TabIndex = 0;
-            this.buttonOpenStream.Text = "Open Stream";
+            this.buttonOpenStream.Text = "Open stream";
             this.buttonOpenStream.UseVisualStyleBackColor = true;
             this.buttonOpenStream.Click += new System.EventHandler(this.buttonOpenStream_Click);
             // 
@@ -148,6 +148,22 @@ namespace StreamPlayer3
             this.panelOpenStream.Size = new System.Drawing.Size(217, 317);
             this.panelOpenStream.TabIndex = 12;
             // 
+            // buttonChat
+            // 
+            this.buttonChat.Enabled = false;
+            this.buttonChat.FlatAppearance.BorderColor = System.Drawing.SystemColors.GrayText;
+            this.buttonChat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonChat.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonChat.Location = new System.Drawing.Point(-1, 47);
+            this.buttonChat.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonChat.Name = "buttonChat";
+            this.buttonChat.Size = new System.Drawing.Size(217, 25);
+            this.buttonChat.TabIndex = 21;
+            this.buttonChat.Text = "Open chat";
+            this.buttonChat.UseVisualStyleBackColor = true;
+            this.buttonChat.Visible = false;
+            this.buttonChat.Click += new System.EventHandler(this.buttonChat_Click);
+            // 
             // labelState
             // 
             this.labelState.AutoSize = true;
@@ -168,7 +184,7 @@ namespace StreamPlayer3
             this.buttonCloseStream.Name = "buttonCloseStream";
             this.buttonCloseStream.Size = new System.Drawing.Size(109, 25);
             this.buttonCloseStream.TabIndex = 19;
-            this.buttonCloseStream.Text = "Close Stream";
+            this.buttonCloseStream.Text = "Close stream";
             this.buttonCloseStream.UseVisualStyleBackColor = true;
             this.buttonCloseStream.Click += new System.EventHandler(this.buttonCloseStream_Click);
             // 
@@ -317,21 +333,6 @@ namespace StreamPlayer3
             this.versionCheckToolStripMenuItem1.Size = new System.Drawing.Size(92, 20);
             this.versionCheckToolStripMenuItem1.Text = "Version check";
             this.versionCheckToolStripMenuItem1.Click += new System.EventHandler(this.checkUpdateToolStripMenuItem1_Click);
-            // 
-            // buttonChat
-            // 
-            this.buttonChat.Enabled = false;
-            this.buttonChat.FlatAppearance.BorderColor = System.Drawing.SystemColors.GrayText;
-            this.buttonChat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonChat.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonChat.Location = new System.Drawing.Point(-1, 47);
-            this.buttonChat.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonChat.Name = "buttonChat";
-            this.buttonChat.Size = new System.Drawing.Size(217, 25);
-            this.buttonChat.TabIndex = 21;
-            this.buttonChat.Text = "Open chat";
-            this.buttonChat.UseVisualStyleBackColor = true;
-            this.buttonChat.Click += new System.EventHandler(this.buttonChat_Click);
             // 
             // StreamPlayer3
             // 
