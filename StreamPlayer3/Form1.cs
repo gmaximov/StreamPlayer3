@@ -405,6 +405,7 @@ namespace StreamPlayer3
                         listBoxFavorite.Items.Add(str);
                     }
                 }
+                WriteFavorites();
                 File.Delete("favorites.txt");
                 return true;
             }
@@ -417,7 +418,7 @@ namespace StreamPlayer3
 
         private async void checkUpdateToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            string version = "000000000006";
+            string version = "000000000007";
             string new_version_path = "https://raw.githubusercontent.com/gmaximov/StreamPlayer3/master/StreamPlayer3/version.txt";
 
             string new_version = await httpClient.GetStringAsync(new_version_path);
