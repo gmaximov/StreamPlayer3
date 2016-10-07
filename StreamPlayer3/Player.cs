@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace StreamPlayer3
 {
-    class MPCBEPlayer
+    class Player
     {
         Process process;
         StreamWriter StandardInput;
 
-        public MPCBEPlayer()
+        public Player()
         {
             process = new Process();
             process.StartInfo.RedirectStandardInput = true;
             process.StartInfo.UseShellExecute = false;
-            process.StartInfo.FileName = @"MPC-BE\mpc-be.exe";
-            process.StartInfo.Arguments = @"- /new";
+            process.StartInfo.FileName = Config.playerPath;
+            process.StartInfo.Arguments = Config.playerArgs;
         }
 
         public void Start()

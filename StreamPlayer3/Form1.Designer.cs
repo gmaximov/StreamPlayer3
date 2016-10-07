@@ -50,13 +50,27 @@ namespace StreamPlayer3
             this.buttonRemove = new System.Windows.Forms.Button();
             this.listBoxFavorite = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.versionCheckToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemVersionCheck = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemConfig = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelConfig = new System.Windows.Forms.Panel();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.groupBoxPlayerSettings = new System.Windows.Forms.GroupBox();
+            this.labelPlayerPath = new System.Windows.Forms.Label();
+            this.textBoxPlayerPath = new System.Windows.Forms.TextBox();
+            this.buttonPlayerPath = new System.Windows.Forms.Button();
+            this.labelPlayerCommandLine = new System.Windows.Forms.Label();
+            this.textBoxPlayerArgs = new System.Windows.Forms.TextBox();
+            this.buttonConfigSave = new System.Windows.Forms.Button();
+            this.buttonConfigClose = new System.Windows.Forms.Button();
+            this.buttonConfigReset = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarBufferSize)).BeginInit();
             this.panelBufferSize.SuspendLayout();
             this.panelOpenStream.SuspendLayout();
             this.panelPlay.SuspendLayout();
             this.panelFavorite.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.panelConfig.SuspendLayout();
+            this.groupBoxPlayerSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonOpenStream
@@ -319,7 +333,8 @@ namespace StreamPlayer3
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.versionCheckToolStripMenuItem1});
+            this.toolStripMenuItemConfig,
+            this.toolStripMenuItemVersionCheck});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -327,18 +342,155 @@ namespace StreamPlayer3
             this.menuStrip1.TabIndex = 20;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // versionCheckToolStripMenuItem1
+            // toolStripMenuItemVersionCheck
             // 
-            this.versionCheckToolStripMenuItem1.Name = "versionCheckToolStripMenuItem1";
-            this.versionCheckToolStripMenuItem1.Size = new System.Drawing.Size(92, 20);
-            this.versionCheckToolStripMenuItem1.Text = "Version check";
-            this.versionCheckToolStripMenuItem1.Click += new System.EventHandler(this.checkUpdateToolStripMenuItem1_Click);
+            this.toolStripMenuItemVersionCheck.Name = "toolStripMenuItemVersionCheck";
+            this.toolStripMenuItemVersionCheck.Size = new System.Drawing.Size(92, 20);
+            this.toolStripMenuItemVersionCheck.Text = "Version check";
+            this.toolStripMenuItemVersionCheck.Click += new System.EventHandler(this.checkUpdateToolStripMenuItem1_Click);
+            // 
+            // toolStripMenuItemConfig
+            // 
+            this.toolStripMenuItemConfig.Name = "toolStripMenuItemConfig";
+            this.toolStripMenuItemConfig.Size = new System.Drawing.Size(55, 20);
+            this.toolStripMenuItemConfig.Text = "Config";
+            this.toolStripMenuItemConfig.Click += new System.EventHandler(this.toolStripMenuItemConfig_Click);
+            // 
+            // panelConfig
+            // 
+            this.panelConfig.Controls.Add(this.buttonConfigReset);
+            this.panelConfig.Controls.Add(this.buttonConfigClose);
+            this.panelConfig.Controls.Add(this.buttonConfigSave);
+            this.panelConfig.Controls.Add(this.groupBoxPlayerSettings);
+            this.panelConfig.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelConfig.Location = new System.Drawing.Point(0, 24);
+            this.panelConfig.Name = "panelConfig";
+            this.panelConfig.Size = new System.Drawing.Size(692, 344);
+            this.panelConfig.TabIndex = 21;
+            this.panelConfig.Visible = false;
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // groupBoxPlayerSettings
+            // 
+            this.groupBoxPlayerSettings.Controls.Add(this.textBoxPlayerArgs);
+            this.groupBoxPlayerSettings.Controls.Add(this.labelPlayerCommandLine);
+            this.groupBoxPlayerSettings.Controls.Add(this.buttonPlayerPath);
+            this.groupBoxPlayerSettings.Controls.Add(this.textBoxPlayerPath);
+            this.groupBoxPlayerSettings.Controls.Add(this.labelPlayerPath);
+            this.groupBoxPlayerSettings.Location = new System.Drawing.Point(12, 15);
+            this.groupBoxPlayerSettings.Name = "groupBoxPlayerSettings";
+            this.groupBoxPlayerSettings.Size = new System.Drawing.Size(364, 118);
+            this.groupBoxPlayerSettings.TabIndex = 0;
+            this.groupBoxPlayerSettings.TabStop = false;
+            this.groupBoxPlayerSettings.Text = "Player settings";
+            // 
+            // labelPlayerPath
+            // 
+            this.labelPlayerPath.AutoSize = true;
+            this.labelPlayerPath.Location = new System.Drawing.Point(7, 20);
+            this.labelPlayerPath.Name = "labelPlayerPath";
+            this.labelPlayerPath.Size = new System.Drawing.Size(63, 13);
+            this.labelPlayerPath.TabIndex = 0;
+            this.labelPlayerPath.Text = "Player path:";
+            // 
+            // textBoxPlayerPath
+            // 
+            this.textBoxPlayerPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxPlayerPath.Location = new System.Drawing.Point(10, 38);
+            this.textBoxPlayerPath.Name = "textBoxPlayerPath";
+            this.textBoxPlayerPath.Size = new System.Drawing.Size(288, 20);
+            this.textBoxPlayerPath.TabIndex = 1;
+            this.textBoxPlayerPath.Text = "MPC-BE\\mpc-be.exe";
+            this.textBoxPlayerPath.TextChanged += new System.EventHandler(this.textBoxPlayerPath_TextChanged);
+            // 
+            // buttonPlayerPath
+            // 
+            this.buttonPlayerPath.FlatAppearance.BorderColor = System.Drawing.SystemColors.GrayText;
+            this.buttonPlayerPath.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonPlayerPath.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonPlayerPath.Location = new System.Drawing.Point(301, 38);
+            this.buttonPlayerPath.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonPlayerPath.Name = "buttonPlayerPath";
+            this.buttonPlayerPath.Size = new System.Drawing.Size(54, 20);
+            this.buttonPlayerPath.TabIndex = 19;
+            this.buttonPlayerPath.Text = "...";
+            this.buttonPlayerPath.UseVisualStyleBackColor = true;
+            this.buttonPlayerPath.Click += new System.EventHandler(this.buttonPlayerPath_Click);
+            // 
+            // labelPlayerCommandLine
+            // 
+            this.labelPlayerCommandLine.AutoSize = true;
+            this.labelPlayerCommandLine.Location = new System.Drawing.Point(7, 67);
+            this.labelPlayerCommandLine.Name = "labelPlayerCommandLine";
+            this.labelPlayerCommandLine.Size = new System.Drawing.Size(242, 13);
+            this.labelPlayerCommandLine.TabIndex = 20;
+            this.labelPlayerCommandLine.Text = "Player command-line argument (for standart input):";
+            // 
+            // textBoxPlayerCommandLine
+            // 
+            this.textBoxPlayerArgs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxPlayerArgs.Location = new System.Drawing.Point(10, 84);
+            this.textBoxPlayerArgs.Name = "textBoxPlayerCommandLine";
+            this.textBoxPlayerArgs.Size = new System.Drawing.Size(288, 20);
+            this.textBoxPlayerArgs.TabIndex = 21;
+            this.textBoxPlayerArgs.Text = "-";
+            this.textBoxPlayerArgs.TextChanged += new System.EventHandler(this.textBoxPlayerCommandLine_TextChanged);
+            // 
+            // buttonConfigSave
+            // 
+            this.buttonConfigSave.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonConfigSave.Enabled = false;
+            this.buttonConfigSave.FlatAppearance.BorderColor = System.Drawing.SystemColors.GrayText;
+            this.buttonConfigSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonConfigSave.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonConfigSave.Location = new System.Drawing.Point(13, 310);
+            this.buttonConfigSave.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonConfigSave.Name = "buttonConfigSave";
+            this.buttonConfigSave.Size = new System.Drawing.Size(73, 25);
+            this.buttonConfigSave.TabIndex = 19;
+            this.buttonConfigSave.Text = "Save";
+            this.buttonConfigSave.UseVisualStyleBackColor = true;
+            this.buttonConfigSave.Click += new System.EventHandler(this.buttonConfigSave_Click);
+            // 
+            // buttonConfigClose
+            // 
+            this.buttonConfigClose.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonConfigClose.FlatAppearance.BorderColor = System.Drawing.SystemColors.GrayText;
+            this.buttonConfigClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonConfigClose.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonConfigClose.Location = new System.Drawing.Point(606, 310);
+            this.buttonConfigClose.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonConfigClose.Name = "buttonConfigClose";
+            this.buttonConfigClose.Size = new System.Drawing.Size(73, 25);
+            this.buttonConfigClose.TabIndex = 20;
+            this.buttonConfigClose.Text = "Close";
+            this.buttonConfigClose.UseVisualStyleBackColor = true;
+            this.buttonConfigClose.Click += new System.EventHandler(this.buttonConfigClose_Click);
+            // 
+            // buttonConfigReset
+            // 
+            this.buttonConfigReset.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonConfigReset.FlatAppearance.BorderColor = System.Drawing.SystemColors.GrayText;
+            this.buttonConfigReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonConfigReset.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonConfigReset.Location = new System.Drawing.Point(313, 310);
+            this.buttonConfigReset.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonConfigReset.Name = "buttonConfigReset";
+            this.buttonConfigReset.Size = new System.Drawing.Size(73, 25);
+            this.buttonConfigReset.TabIndex = 21;
+            this.buttonConfigReset.Text = "Reset";
+            this.buttonConfigReset.UseVisualStyleBackColor = true;
+            this.buttonConfigReset.Click += new System.EventHandler(this.buttonConfigReset_Click);
             // 
             // StreamPlayer3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(692, 368);
+            this.Controls.Add(this.panelConfig);
             this.Controls.Add(this.panelFavorite);
             this.Controls.Add(this.panelOpenStream);
             this.Controls.Add(this.panelPlay);
@@ -359,6 +511,9 @@ namespace StreamPlayer3
             this.panelFavorite.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.panelConfig.ResumeLayout(false);
+            this.groupBoxPlayerSettings.ResumeLayout(false);
+            this.groupBoxPlayerSettings.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -386,7 +541,19 @@ namespace StreamPlayer3
         private System.Windows.Forms.Button buttonRemove;
         private System.Windows.Forms.Button buttonChat;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem versionCheckToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemVersionCheck;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemConfig;
+        private System.Windows.Forms.Panel panelConfig;
+        private System.Windows.Forms.GroupBox groupBoxPlayerSettings;
+        private System.Windows.Forms.Label labelPlayerCommandLine;
+        private System.Windows.Forms.Button buttonPlayerPath;
+        private System.Windows.Forms.TextBox textBoxPlayerPath;
+        private System.Windows.Forms.Label labelPlayerPath;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button buttonConfigReset;
+        private System.Windows.Forms.Button buttonConfigClose;
+        private System.Windows.Forms.Button buttonConfigSave;
+        private System.Windows.Forms.TextBox textBoxPlayerArgs;
     }
 }
 

@@ -71,6 +71,7 @@ namespace StreamPlayer3
                 await Task.Delay(1000);
             }
 
+            buttonStop.Enabled = false;
             panelOpenStream.Enabled = true;
             listBoxQualityPlaylist.Enabled = true;
             buttonPlay.Enabled = true;
@@ -190,7 +191,7 @@ namespace StreamPlayer3
                 Thread.Sleep(wait);
             }
 
-            MPCBEPlayer player = new MPCBEPlayer();
+            Player player = new Player();
             player.Start();
 
             try
@@ -327,7 +328,10 @@ namespace StreamPlayer3
         {
             httpClient = new HttpClient();
             chunks = new Queue<TwitchDownload>();
-            ReadFavorites();
+
+            Config.Load();
+
+            ReadConfig();
         }
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
@@ -369,19 +373,29 @@ namespace StreamPlayer3
 
         private void WriteFavorites()
         {
-            string[] items = new string[listBoxFavorite.Items.Count];
-            int i = 0;
-
+            Config.favorites.Clear();
             foreach ( string item in listBoxFavorite.Items )
             {
-                items[i] = item;
-                i++;
+                Config.favorites.Add(item);
             }
-            File.WriteAllLines("favorites.txt", items);
+            Config.Save();
         }
-        private void ReadFavorites()
+
+        private void ReadConfig()
         {
-            if(File.Exists("favorites.txt") )
+            textBoxPlayerPath.Text = Config.playerPath;
+            textBoxPlayerArgs.Text = Config.playerArgs;
+
+            listBoxFavorite.Items.Clear();
+            if ( !TryReadOldFavs() )
+            {
+                listBoxFavorite.Items.AddRange(Config.favorites.ToArray());
+            }
+        }
+
+        private bool TryReadOldFavs()
+        {
+            if ( File.Exists("favorites.txt") )
             {
                 using ( StreamReader sr = File.OpenText("favorites.txt") )
                 {
@@ -391,12 +405,19 @@ namespace StreamPlayer3
                         listBoxFavorite.Items.Add(str);
                     }
                 }
+                File.Delete("favorites.txt");
+                return true;
             }
+            else
+            {
+                return false;
+            }
+
         }
 
         private async void checkUpdateToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            string version = "000000000005";
+            string version = "000000000006";
             string new_version_path = "https://raw.githubusercontent.com/gmaximov/StreamPlayer3/master/StreamPlayer3/version.txt";
 
             string new_version = await httpClient.GetStringAsync(new_version_path);
@@ -405,7 +426,7 @@ namespace StreamPlayer3
             {
                 if ( MessageBox.Show("New version available. Would you like to download it?", "Version check", MessageBoxButtons.YesNo) == DialogResult.Yes )
                 {
-                    System.Diagnostics.Process.Start("https://mega.nz/#F!d0xUGLhZ!Rve7JFm7moPmsOCT8m0XXQ");
+                    System.Diagnostics.Process.Start("https://github.com/gmaximov/StreamPlayer3/releases/latest");
                 }
             }
             else
@@ -417,6 +438,58 @@ namespace StreamPlayer3
         private void buttonChat_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://www.twitch.tv/" + textBoxOpenStream.Text + "/chat?popout=");
+        }
+
+        private void toolStripMenuItemConfig_Click(object sender, EventArgs e)
+        {
+
+            panelConfig.Visible = true;
+        }
+
+        private void buttonPlayerPath_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Filter = "exe files (*.exe)|*.exe|All files (*.*)|*.*";
+            openFileDialog1.InitialDirectory = Directory.GetCurrentDirectory();
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.RestoreDirectory = true;
+            openFileDialog1.FileName = "";
+
+            if ( openFileDialog1.ShowDialog() == DialogResult.OK )
+            {
+                textBoxPlayerPath.Text = openFileDialog1.FileName;
+            }
+        }
+
+        private void buttonConfigReset_Click(object sender, EventArgs e)
+        {
+            textBoxPlayerPath.Text = @"MPC-BE\mpc-be.exe";
+            textBoxPlayerArgs.Text = @"-";           
+        }
+
+        private void buttonConfigSave_Click(object sender, EventArgs e)
+        {
+            buttonConfigSave.Enabled = false;
+
+            Config.playerPath = textBoxPlayerPath.Text;
+            Config.playerArgs = textBoxPlayerArgs.Text;
+            Config.Save();
+
+            panelConfig.Visible = false;
+        }
+
+        private void buttonConfigClose_Click(object sender, EventArgs e)
+        {
+            panelConfig.Visible = false;
+        }
+
+        private void textBoxPlayerPath_TextChanged(object sender, EventArgs e)
+        {
+            buttonConfigSave.Enabled = true;
+        }
+
+        private void textBoxPlayerCommandLine_TextChanged(object sender, EventArgs e)
+        {
+            buttonConfigSave.Enabled = true;
         }
     }
 }
