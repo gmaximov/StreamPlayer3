@@ -1,5 +1,5 @@
 # StreamPlayer3
-Latest release here - https://mega.nz/#F!d0xUGLhZ!Rve7JFm7moPmsOCT8m0XXQ
+Latest release here - https://github.com/gmaximov/StreamPlayer3/releases/latest
 
 Requirements
 --------------
