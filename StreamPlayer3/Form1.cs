@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
@@ -62,7 +63,7 @@ namespace StreamPlayer3
             selectedQuality = qualityPlaylist[listBoxQualityPlaylist.SelectedItem.ToString()];
 
             isStreamStopped = false;
-
+            
             Task task1 = Task.Run((Action) Play);
             Task task2 = Task.Run((Action) StartWrite);
 
@@ -150,7 +151,7 @@ namespace StreamPlayer3
                             }
                         }
                         lastindex = chunkName;
-                        string chunkPath = url.ToString().Replace("index-live.m3u8", chunkName);
+                        string chunkPath = url.ToString().Replace("index-live.m3u8", chunkName).Split('?')[0];
                         byte[] chunk = await httpClient.GetByteArrayAsync(chunkPath);
                         lock ( chunks )
                         {
@@ -418,7 +419,7 @@ namespace StreamPlayer3
 
         private async void checkUpdateToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            string version = "000000000007";
+            string version = "000000000008";
             string new_version_path = "https://raw.githubusercontent.com/gmaximov/StreamPlayer3/master/StreamPlayer3/version.txt";
 
             string new_version = await httpClient.GetStringAsync(new_version_path);
