@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using StreamPlayer;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace StreamPlayer3
+namespace StreamPlayer3.App.Plugins.Twitch
 {
-    public partial class StreamPlayer3 : Form
+    public partial class TwitchControl : UserControl
     {
+
         private HttpClient httpClient;
 
-        private Dictionary<string, TwitchQuality> qualityPlaylist;
+        private Dictionary<string, TwitchQuality> qualityPlaylist = new Dictionary<string, TwitchQuality>();
         private TwitchQuality selectedQuality;
 
         private int bufferSize;
@@ -23,7 +29,8 @@ namespace StreamPlayer3
         private volatile bool isStreamDownloading;
         private volatile bool isStreamStopped;
 
-        public StreamPlayer3()
+
+        public TwitchControl()
         {
             InitializeComponent();
         }
@@ -45,7 +52,6 @@ namespace StreamPlayer3
         private void buttonCloseStream_Click(object sender, EventArgs e)
         {
             buttonCloseStream.Enabled = false;
-            buttonChat.Enabled = false;
             panelPlay.Enabled = false;
 
             CloseStream();
@@ -63,7 +69,7 @@ namespace StreamPlayer3
             selectedQuality = qualityPlaylist[listBoxQualityPlaylist.SelectedItem.ToString()];
 
             isStreamStopped = false;
-            
+
             Task task1 = Task.Run((Action) Play);
             Task task2 = Task.Run((Action) StartWrite);
 
@@ -103,7 +109,6 @@ namespace StreamPlayer3
 
                 panelPlay.Enabled = true;
                 buttonCloseStream.Enabled = true;
-                buttonChat.Enabled = true;
             }
         }
         private void CloseStream()
@@ -138,9 +143,9 @@ namespace StreamPlayer3
                     for ( int i = 0; i < 6; i++ )
                     {
                         string chunkName = playlist[startLine + (i * 2)];
-                        if( !isLastFound)
+                        if ( !isLastFound )
                         {
-                            if ( lastindex != chunkName)
+                            if ( lastindex != chunkName )
                             {
                                 continue;
                             }
@@ -180,7 +185,7 @@ namespace StreamPlayer3
             int bufferSize = this.bufferSize;
             int wait = bufferSize * 1000 + 1000;
 
-            while (true)
+            while ( true )
             {
                 lock ( chunks )
                 {
@@ -234,7 +239,7 @@ namespace StreamPlayer3
                 return null;
             }
 
-            if (accessToken == null )
+            if ( accessToken == null )
             {
                 return null;
             }
@@ -270,7 +275,7 @@ namespace StreamPlayer3
             path = "http://api.twitch.tv/api/channels/"
                 + channelName.ToLower()
                 + "/access_token.json?oauth_token=qflco99t368mdeu5o04vx1eaw4tz52";
-           
+
             string response;
 
             try
@@ -310,12 +315,7 @@ namespace StreamPlayer3
 
                 resolution = parameters[2].Split('=')[1].Replace("\"", "");
 
-                bool parsed = Int32.TryParse(parameters[1].Split('=')[1].Replace("\"", ""), out bitrate);
-                if ( !parsed )
-                {
-                    throw new Exception("SOMETHING BAD HAPPEN WHILE PARSING " + parameters[1].Replace("\"", "") + " to INT");
-                }
-                bitrate = bitrate / 1024;
+                bitrate = Int32.Parse(parameters[1].Split('=')[1].Replace("\"", "")) / 1024;
 
                 url = qualityPlaylist[currentLine + 2];
 
@@ -324,17 +324,7 @@ namespace StreamPlayer3
             }
             return parsedPlaylist;
         }
-        
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            httpClient = new HttpClient();
-            chunks = new Queue<TwitchDownload>();
-
-            Config.Load();
-
-            ReadConfig();
-        }
-        private void trackBar1_Scroll(object sender, EventArgs e)
+        private void trackBarBufferSize_Scroll(object sender, EventArgs e)
         {
             labelBufferSizeValue.Text = (trackBarBufferSize.Value).ToString();
         }
@@ -357,7 +347,7 @@ namespace StreamPlayer3
         }
         private void buttonEdit_Click(object sender, EventArgs e)
         {
-            if( listBoxFavorite.SelectedIndex >= 0 )
+            if ( listBoxFavorite.SelectedIndex >= 0 )
             {
                 listBoxFavorite.Items[listBoxFavorite.SelectedIndex] = textBoxOpenStream.Text;
                 WriteFavorites();
@@ -384,8 +374,6 @@ namespace StreamPlayer3
 
         private void ReadConfig()
         {
-            textBoxPlayerPath.Text = Config.playerPath;
-            textBoxPlayerArgs.Text = Config.playerArgs;
 
             listBoxFavorite.Items.Clear();
             if ( !TryReadOldFavs() )
@@ -417,81 +405,14 @@ namespace StreamPlayer3
 
         }
 
-        private async void checkUpdateToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void TwitchControl_Load(object sender, EventArgs e)
         {
-            string version = "8";
-            string new_version_path = "https://raw.githubusercontent.com/gmaximov/StreamPlayer3/master/StreamPlayer3/version.txt";
+            httpClient = new HttpClient();
+            chunks = new Queue<TwitchDownload>();
 
-            string new_version = await httpClient.GetStringAsync(new_version_path);
+            Config.Load();
 
-            if (version != new_version)
-            {
-                if ( MessageBox.Show("New version available. Would you like to download it?", "Version check", MessageBoxButtons.YesNo) == DialogResult.Yes )
-                {
-                    System.Diagnostics.Process.Start("https://github.com/gmaximov/StreamPlayer3/releases/latest");
-                }
-            }
-            else
-            {
-                MessageBox.Show("You have latest version.", "Version check");
-            }
-        }
-
-        private void buttonChat_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://www.twitch.tv/" + textBoxOpenStream.Text + "/chat?popout=");
-        }
-
-        private void toolStripMenuItemConfig_Click(object sender, EventArgs e)
-        {
-
-            panelConfig.Visible = true;
-        }
-
-        private void buttonPlayerPath_Click(object sender, EventArgs e)
-        {
-            openFileDialog1.Filter = "exe files (*.exe)|*.exe|All files (*.*)|*.*";
-            openFileDialog1.InitialDirectory = Directory.GetCurrentDirectory();
-            openFileDialog1.FilterIndex = 1;
-            openFileDialog1.RestoreDirectory = true;
-            openFileDialog1.FileName = "";
-
-            if ( openFileDialog1.ShowDialog() == DialogResult.OK )
-            {
-                textBoxPlayerPath.Text = openFileDialog1.FileName;
-            }
-        }
-
-        private void buttonConfigReset_Click(object sender, EventArgs e)
-        {
-            textBoxPlayerPath.Text = @"MPC-BE\mpc-be.exe";
-            textBoxPlayerArgs.Text = @"-";           
-        }
-
-        private void buttonConfigSave_Click(object sender, EventArgs e)
-        {
-            buttonConfigSave.Enabled = false;
-
-            Config.playerPath = textBoxPlayerPath.Text;
-            Config.playerArgs = textBoxPlayerArgs.Text;
-            Config.Save();
-
-            panelConfig.Visible = false;
-        }
-
-        private void buttonConfigClose_Click(object sender, EventArgs e)
-        {
-            panelConfig.Visible = false;
-        }
-
-        private void textBoxPlayerPath_TextChanged(object sender, EventArgs e)
-        {
-            buttonConfigSave.Enabled = true;
-        }
-
-        private void textBoxPlayerCommandLine_TextChanged(object sender, EventArgs e)
-        {
-            buttonConfigSave.Enabled = true;
+            ReadConfig();
         }
     }
 }

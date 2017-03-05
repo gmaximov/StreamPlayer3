@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace StreamPlayer3.Properties
+namespace StreamPlayer.Properties
 {
 
 
@@ -44,7 +44,7 @@ namespace StreamPlayer3.Properties
             {
                 if ( (resourceMan == null) )
                 {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("StreamPlayer3.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("StreamPlayer.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

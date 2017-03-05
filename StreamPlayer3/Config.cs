@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 
-namespace StreamPlayer3
+namespace StreamPlayer
 {
     public static class Config
     {
@@ -46,6 +48,7 @@ namespace StreamPlayer3
                 Save();
             }
         }
+
         public static void Save()
         {
             string text = playerPath + "\n" + playerArgs + "\n";

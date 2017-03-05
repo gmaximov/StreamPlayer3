@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using StreamPlayer.App.Forms;
+using System;
 using System.Windows.Forms;
 
-namespace StreamPlayer3
+namespace StreamPlayer
 {
     static class Program
     {
@@ -16,7 +14,7 @@ namespace StreamPlayer3
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new StreamPlayer3());
+            Application.Run(new FormStreamPlayer());
         }
     }
 }

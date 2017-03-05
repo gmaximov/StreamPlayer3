@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace StreamPlayer3.Properties
+namespace StreamPlayer.Properties
 {
 
 

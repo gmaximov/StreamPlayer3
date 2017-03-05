@@ -12,7 +12,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StreamPlayer3
+namespace StreamPlayer
 {
     public class TwitchDownload
     {

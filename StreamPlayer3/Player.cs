@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StreamPlayer3
+namespace StreamPlayer
 {
     class Player
     {
